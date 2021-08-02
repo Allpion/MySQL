@@ -76,6 +76,13 @@ SELECT f.id, fr.name AS `from`, t.name AS `to` from flights f
     
     
 
+id|from        |to         |
+--+------------+-----------+
+ 1|Благовещенск|Астрахань  |
+ 2|Гатчина     |Ессентуки  |
+ 3|Красноярск  |Ижевск     |
+ 4|Липецк      |Новокузнецк|
+ 5|Пенза       |Норильск   |
 
 
 
@@ -89,106 +96,3 @@ SELECT f.id, fr.name AS `from`, t.name AS `to` from flights f
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-select * from catalogs c 
-union 
-select id, name from products p 
-union
-select id, name from users;
-
-
-select * from catalogs c;
-
-select id, name, catalog_id from products p;
-
-select id, name, catalog_id
-from products p 
-where catalog_id = 1;
-
-select id, name, catalog_id
-from products p 
-where catalog_id = (select id from catalogs c where name = 'Процессоры')
-
-select max(price) from products p 
-
-select id, name, catalog_id
-from products p 
-where price = (select max(price) from products p2);
-
-select id, name, catalog_id
-from products p;
-
-select id, name, (select name from catalogs where id = catalog_id) as 'catalog'
-from products;
-
-SELECT
-  id, name, catalog_id
-FROM
-  products
-WHERE
-  catalog_id in (SELECT id FROM catalogs);
-  
-select id, name, price, catalog_id
-from products
-where catalog_id = 2 and 
-    price < any (select price from products where catalog_id =1);
-    
-select id, name, price, catalog_id
-from products 
-order by catalog_id, price 
-
-SELECT
-  id, name, price, catalog_id
-FROM
-  products
-WHERE
-  catalog_id = 2 AND
-  price < SOME (SELECT price FROM products WHERE catalog_id = 1);
-  
-  SELECT
-  id, name, price, catalog_id
-FROM
-  products
-WHERE
-  catalog_id = 2 AND
-  price > ALL (SELECT price FROM products WHERE catalog_id = 1);
-  
-select avg(price)
-from
-(select min(price) as price from products p group by catalog_id) as prod
-
-select p.name, p.price, c.name
-from catalogs c 
-join products p 
-on c.id = p.catalog_id 
-
-select * from catalogs fst join catalogs snd on fst.id = snd.id 
-
-SELECT
-  p.name,
-  p.price,
-  c.name
-FROM
-  catalogs AS c
-LEFT JOIN
-  products AS p
-ON
-  c.id = p.catalog_id;
